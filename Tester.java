@@ -7,7 +7,7 @@ public class Tester {
         if (args.length > 0 && Boolean.parseBoolean(args[0]) == false) DEBUG = false;
         String test = "";
 
-        test = "IntegerSequence.hasNext()";
+        test = "Range.hasNext()";
         try {
             IntegerSequence r = new Range(10, 15);
             ArrayList<Integer> a = new ArrayList<Integer>();
@@ -19,7 +19,38 @@ public class Tester {
             except(test, e);
         }
 
-        test = "IntegerSequence.next()";
+        test = "ArraySequence.hasNext()";
+        try {
+            int[] nums = {1, 3, 5, 0, -1, 3, 9};
+            IntegerSequence as = new ArraySequence(nums);
+            ArrayList<Integer> a = new ArrayList<Integer>();
+            while (as.hasNext()) {
+                a.add(as.next());
+            }
+            check(test, a.toString(), "[1, 3, 5, 0, -1, 3, 9]");
+
+            IntegerSequence r = new Range(10, 15);
+            IntegerSequence as1 = new ArraySequence(r);
+            ArrayList<Integer> a1 = new ArrayList<Integer>();
+            while (as1.hasNext()) {
+                a1.add(as1.next());
+            }
+            check(test, a1.toString(), "[10, 11, 12, 13, 14, 15]");
+        } catch(RuntimeException e) {
+            except(test, e);
+        }
+
+        test = "Range.constructor.IllegalArgumentException";
+        try {
+            IntegerSequence r = new Range(15, 10);
+            r.reset();
+            noException(test, "IllegalArgumentException");
+        } catch(IllegalArgumentException e) {
+        } catch(RuntimeException e) {
+            except(test, e);
+        }
+
+        test = "Range.next.NoSuchElementException";
         try {
             IntegerSequence r = new Range(10, 15);
             ArrayList<Integer> a = new ArrayList<Integer>();
@@ -32,28 +63,16 @@ public class Tester {
             except(test, e);
         }
 
-        test = "ArraySequence(int[] other)";
+        test = "ArraySequence.next.NoSuchElementException";
         try {
+            ArrayList<Integer> a = new ArrayList<Integer>();
             int[] nums = {1, 3, 5, 0, -1, 3, 9};
             IntegerSequence as = new ArraySequence(nums);
-            ArrayList<Integer> a = new ArrayList<Integer>();
-            while (as.hasNext()) {
+            for (int i = 0; i < 10; i++) {
                 a.add(as.next());
             }
-            check(test, a.toString(), "[1, 3, 5, 0, -1, 3, 9]");
-        } catch(RuntimeException e) {
-            except(test, e);
-        }
-
-        test = "ArraySequence(IntegerSequence otherseq)";
-        try {
-            IntegerSequence r = new Range(10, 15);
-            IntegerSequence as = new ArraySequence(r);
-            ArrayList<Integer> a = new ArrayList<Integer>();
-            while (as.hasNext()) {
-                a.add(as.next());
-            }
-            check(test, a.toString(), "[10, 11, 12, 13, 14, 15]");
+            noException(test, "NoSuchElementException");
+        } catch(NoSuchElementException e) {
         } catch(RuntimeException e) {
             except(test, e);
         }
