@@ -7,6 +7,26 @@ public class Tester {
         if (args.length > 0 && Boolean.parseBoolean(args[0]) == false) DEBUG = false;
         String test = "";
 
+        test = "Range.reset()";
+        try {
+            IntegerSequence r = new Range(10, 15);
+            IntegerSequence as = new ArraySequence(r);
+            int a = r.next();
+            a = r.next();
+            r.reset();
+            a = r.next();
+
+            a = as.next();
+            a = as.next();
+            as.reset();
+            a = as.next();
+
+            check(test, a, 10);
+            check(test, a, 10);
+        } catch(RuntimeException e) {
+            except(test, e);
+        }
+
         test = "Range.hasNext()";
         try {
             IntegerSequence r = new Range(10, 15);
