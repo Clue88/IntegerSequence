@@ -7,7 +7,6 @@ public class ArraySequence implements IntegerSequence {
         currentIndex = 0;
         data = new int[other.length];
         for (int i = 0; i < other.length; i++) {
-            System.out.println(other[i]);
             data[i] = other[i];
         }
     }
