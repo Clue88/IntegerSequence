@@ -15,7 +15,6 @@ public class Tester {
                 a.add(r.next());
             }
             check(test, a.toString(), "[10, 11, 12, 13, 14, 15]");
-
         } catch(RuntimeException e) {
             except(test, e);
         }
@@ -29,7 +28,19 @@ public class Tester {
             }
             noException(test, "NoSuchElementException");
         } catch(NoSuchElementException e) {
-            
+        } catch(RuntimeException e) {
+            except(test, e);
+        }
+
+        test = "ArraySequence(int[] other)";
+        try {
+            int[] nums = {1, 3, 5, 0, -1, 3, 9};
+            IntegerSequence as = new ArraySequence(nums);
+            ArrayList<Integer> a = new ArrayList<Integer>();
+            while (as.hasNext()) {
+                a.add(as.next());
+            }
+            check(test, a.toString(), "[1, 3, 5, 0, -1, 3, 9]");
         } catch(RuntimeException e) {
             except(test, e);
         }
